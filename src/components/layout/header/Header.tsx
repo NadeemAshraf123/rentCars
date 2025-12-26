@@ -1,33 +1,92 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
+import React from "react";
 import AppIcon from '../../../assets/icons/AppIcon.png';
+import { useNavigate } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import { logout } from "../../../redux/slice/authslice/authSlice";
+import { toast, ToastContainer } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 
-const navItems = [
-  { label: 'Become a renter', href: '/renter' },
-  { label: 'Rental deals', href: '/deals' },
-  { label: 'How it works', href: '/how-it-works' },
-  { label: 'Why choose us', href: '/why-us' },
-]
 
-export default function Header() {
+const NAV_ITEMS: string[] = [
+  "Become a renter",
+  "Rental deals",
+  "How it work",
+  "Why choose us",
+];
+
+
+const Header: React.FC = () => {
+
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const { user } = useSelector((state: any) => state.auth);
+
+
+  const handleLogin = () => { navigate('/login') };
+  const handleSignup = () => { navigate('/signup') };
+  const handleHome = () => { navigate('/') } ;
+  const handleLogout = () => { dispatch(logout()) 
+    toast.success('User signed out successfully 👋', {
+    position: 'top-right',
+    autoClose: 3000,
+  }); };
+
+
   return (
-    <header className="flex justify-between items-center py-4 bg-white">
-        
-      <Link to="/" className="flex items-center gap-2 text-blue-900 hover:text-[#1572D3] transition-all text-lg font-bold">
-        <img src={AppIcon} alt="Rentcars Logo" className="w-8 h-8 object-contain" />
-        RENTCARS
-      </Link>
-      <nav className="flex">
-        {navItems.map((item) => (
-          <Link key={item.label} to={item.href} className="px-20 py-2 rounded-full text-md font-large text-grey-500 hover:bg-blue-50 transition">
-            {item.label}
-          </Link>
-        ))}
-      </nav>
-      <div className="flex gap-4">
-        <button className="hover:bg-[#1572D3]  hover:text-white px-8 py-3 rounded-lg">Sign in</button>
-        <button className="bg-[#1572D3] text-white hover:text-white px-8 py-3 rounded-lg">Sign up</button>
+    <header className="w-full bg-white shadow-sm">
+      <div className="max-full px-4 sm:px-6 lg:px-8">
+        <div className="flex justify-between items-center h-16">
+          
+          <div className="text-2xl font-bold text-blue-600 cursor-pointer" onClick={handleHome}>
+            <img src={AppIcon} alt="appicon" className="w-8 h-8 inline-block mr-2" />
+            RENTCARS
+         </div>
+
+          <nav className="hidden md:flex space-x-3">
+            {NAV_ITEMS.map((label) => (
+              <button
+                key={label}
+                className="text-lg font-sm text-gray-700 px-8 py-2 rounded-xl hover:bg-blue-40 hover:bg-blue-100 transition"
+              >
+                {label}
+              </button>
+            ))}
+          </nav>
+
+          <div className="flex items-center space-x-6">
+            { !user ? ( 
+              <>
+           
+            <button 
+            onClick={handleLogin}
+            className="text-sm font-medium bg-red-500 text-gray-700 px-6 py-3 rounded-lg hover:bg-[#1572d3] text-white transition"
+            
+            >
+              Sign in
+            </button>
+
+            <button 
+            onClick={handleSignup}
+            className="text-sm font-medium px-6 py-3 bg-gray-700 text-gray-700 rounded-lg hover:bg-[#1572d3] text-white"
+            >
+              Sign up
+            </button>
+              </>
+             ) : (
+              <button 
+              onClick={handleLogout}
+              className="text-sm font-medium px-6 py-3 bg-gray-700 text-gray-700 rounded-lg hover:bg-[#1572d3] text-white"
+              >
+                Sign out
+              </button>
+             ) }
+
+           
+          </div>
+        </div>
       </div>
     </header>
-  )
-}
+  );
+};
+
+export default Header;

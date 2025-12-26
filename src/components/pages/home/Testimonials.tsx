@@ -64,7 +64,7 @@ export default function Testimonials() {
       <Swiper
         modules={[Pagination, Navigation, Autoplay]}
         spaceBetween={30}
-        slidesPerView={1}
+        slidesPerView={2}
         loop={true}
         autoplay={{ delay: 4000 }}
         pagination={{ clickable: true }}
@@ -82,7 +82,7 @@ export default function Testimonials() {
       <img
         src={review.image}
         alt={review.name}
-        className="w-[80%] h-[80%] object-cover rounded-xl"
+        className="w-[100%] h-[100%] object-cover rounded-xl"
       />
     </div>
 
