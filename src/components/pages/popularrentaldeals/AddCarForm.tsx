@@ -66,7 +66,15 @@ export default function AddCarForm() {
     setErrors(newErrors);
 
     if (Object.keys(newErrors).length === 0) {
-      dispatch(addCar(formData))
+      const carData = {
+        ...formData,
+        ownerId: user.id,
+        rating: Number(formData.rating),
+        reviews: Number(formData.reviews),
+        price: Number(formData.price),
+      };
+
+      dispatch(addCar(carData))
         .unwrap()
         .then(() => {
           toast.success("Car added successfully!");

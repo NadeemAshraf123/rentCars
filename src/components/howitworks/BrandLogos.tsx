@@ -1,43 +1,31 @@
-import React, { useEffect, useRef } from "react";
+import React from "react";
 import Acura from "../../assets/logos/Acura.png";
-import GroupCircle from "../../assets/logos/GroupCircle.png";
 import HONDA from "../../assets/logos/HONDA.png";
 import Jaguar from "../../assets/logos/Jaguar.png";
 import Nissan from "../../assets/logos/Nissan.png";
 import VolvoCars from "../../assets/logos/VolvoCars svg.png";
-import Audi from "../../assets/logos/GroupCircle.png"; // replace with real Audi logo
+import Audi from "../../assets/logos/GroupCircle.png";
 
 const brandImages = [HONDA, Jaguar, Nissan, VolvoCars, Audi, Acura];
 
 export default function BrandLogos() {
-  const containerRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const container = containerRef.current;
-    let scrollAmount = 0;
-
-    const interval = setInterval(() => {
-      if (!container) return;
-      scrollAmount += 1;
-      if (scrollAmount >= container.scrollWidth / 2) {
-        scrollAmount = 0;
-      }
-      container.scrollTo({ left: scrollAmount, behavior: "smooth" });
-    }, 5);
-
-    return () => clearInterval(interval);
-  }, []);
-
   return (
-    <div
-      ref={containerRef}
-      className="flex overflow-hidden whitespace-nowrap gap-6 w-full"
-    >
-      {[...brandImages, ...brandImages].map((img, idx) => (
-        <div key={idx} className="flex-shrink-0">
-          <img src={img} alt="brand" className="h-6 w-auto" />
-        </div>
-      ))}
-    </div>
+    <div className="w-full py-6">
+  <div className="flex items-center justify-between">
+    {brandImages.map((img, idx) => (
+      <div
+        key={idx}
+        className="w-[320px] h-[40px] flex items-center justify-center"
+      >
+        <img
+          src={img}
+          alt="brand"
+          className="max-h-[38px] max-w-full object-contain  opacity-100"
+        />
+      </div>
+    ))}
+  </div>
+</div>
+
   );
 }

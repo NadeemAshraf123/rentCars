@@ -1,7 +1,8 @@
 import "./App.css";
-import { Routes, Route, Navigate } from "react-router-dom";
+import { Routes, Route, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
-import { ToastContainer } from "react-toastify";
+import { ToastContainer, toast } from "react-toastify";
+import { useEffect } from "react";
 import "react-toastify/dist/ReactToastify.css";
 
 import Header from "./components/layout/header/Header";
@@ -17,13 +18,21 @@ import Footer from "./components/pages/home/Footer";
 import LoginForm from "./components/auth/Login";
 import SignupForm from "./components/auth/Signup";
 import AddCarForm from "./components/pages/popularrentaldeals/AddCarForm";
+import Dashboard from "./components/dashboard/Dashboard"; // ✅ new dashboard page
 
-// 🔐 OWNER PROTECTED ROUTE
 function OwnerRoute({ children }) {
   const { user } = useSelector((state) => state.auth);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!user || user.role !== "owner") {
+      toast.error("Access denied. Owners only.");
+      navigate("/", { replace: true });
+    }
+  }, [user, navigate]);
 
   if (!user || user.role !== "owner") {
-    return <Navigate to="/" replace />;
+    return null;
   }
 
   return children;
@@ -34,10 +43,10 @@ function App() {
 
   return (
     <>
-      <Header />
+      {/* ✅ Pass user to Header so it can conditionally show Dashboard nav */}
+      <Header user={user} />
 
       <Routes>
-        {/* HOME */}
         <Route
           path="/"
           element={
@@ -61,11 +70,9 @@ function App() {
           }
         />
 
-        {/* AUTH */}
         <Route path="/login" element={<LoginForm />} />
         <Route path="/signup" element={<SignupForm />} />
 
-        {/* 🔐 OWNER ONLY */}
         <Route
           path="/addcarform"
           element={
@@ -74,14 +81,19 @@ function App() {
             </OwnerRoute>
           }
         />
+
+        {/* ✅ Protected Dashboard route */}
+        <Route
+          path="/dashboard"
+          element={
+            <OwnerRoute>
+              <Dashboard />
+            </OwnerRoute>
+          }
+        />
       </Routes>
 
-      {/* 🌍 GLOBAL TOAST */}
-      <ToastContainer
-        position="top-right"
-        autoClose={3000}
-        theme="colored"
-      />
+      <ToastContainer position="top-right" autoClose={3000} theme="colored" />
     </>
   );
 }
