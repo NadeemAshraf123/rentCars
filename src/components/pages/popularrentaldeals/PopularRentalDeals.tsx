@@ -19,14 +19,19 @@ export default function PopularRentalDeals() {
 
   const visibleCars = showAll ? cars : cars.slice(0, 4);
 
-  const handleRentClick = () => {
-    if (!user) {
-      toast.error("Please login or register first");
-      navigate("/login");
-    } else {
-      toast.success("Booking flow coming soon!");
-    }
-  };
+const handleRentClick = (car) => {
+  if (!user) {
+    toast.error("Please login or register first");
+    navigate("/login");
+  } else {
+    navigate("/booking", { state: { car } }); 
+  }
+};
+
+
+
+
+
 
   return (
     <section className="bg-white mt-30 px-4 md:px-20">
@@ -79,11 +84,12 @@ export default function PopularRentalDeals() {
 
                 <div className="flex justify-center rounded-4xl">
                   <button
-                    onClick={handleRentClick}
-                    className="flex items-center justify-center gap-2 w-full bg-[#1572D3] text-white px-6 py-2 rounded hover:bg-blue-600 transition"
-                  >
-                    Rent Now <FaArrowRight />
-                  </button>
+                       onClick={() => handleRentClick(car)}
+                       className="flex items-center justify-center gap-2 w-full bg-[#1572D3] text-white px-6 py-2 rounded hover:bg-blue-600 transition"
+                          >
+                       Rent Now <FaArrowRight />
+                 </button>
+
                 </div>
               </div>
             </div>

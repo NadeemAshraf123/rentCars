@@ -5,10 +5,16 @@ export default function EditCarModal({ car, onClose, onSubmit }) {
   const [preview, setPreview] = useState(car.image);
   const [errors, setErrors] = useState({});
 
-  useEffect(() => {
-    setFormData(car);
-    setPreview(car.image);
-  }, [car]);
+useEffect(() => {
+  setFormData({
+    ...car,
+    passengers: parseInt(car.passengers), 
+    doors: parseInt(car.doors),        
+    reviews: car.reviews ?? 0,
+  });
+  setPreview(car.image);
+}, [car]);
+
 
   const handleChange = (e) => {
     const { name, value, type, checked, files } = e.target;
@@ -37,59 +43,58 @@ export default function EditCarModal({ car, onClose, onSubmit }) {
     return newErrors;
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    const newErrors = validate();
-    setErrors(newErrors);
-    if (Object.keys(newErrors).length > 0) return;
 
-    onSubmit(car.id, formData);
-    onClose();
+  const handleSubmit = (e) => {
+  e.preventDefault();
+  const newErrors = validate();
+  setErrors(newErrors);
+  if (Object.keys(newErrors).length > 0) return;
+
+  const formattedData = {
+    ...formData,
+    passengers: `${formData.passengers}-passengers`,
+    doors: `${formData.doors}-Doors`,
   };
 
-  return (
-    // ✅ Outer overlay with scroll enabled
-    <div className="fixed inset-0 bg-white bg-opacity-20 z-50 overflow-y-auto">
-      {/* ✅ Flex wrapper for horizontal centering + vertical padding */}
-      <div className="flex justify-center py-10">
-        {/* ✅ Actual modal box */}
-        <div className="bg-white rounded-xl shadow-lg w-full max-w-2xl p-6 relative">
-          <h2 className="text-2xl font-bold text-gray-800 mb-4">Edit Car Details</h2>
+  onSubmit(car.id, formattedData);
+  onClose();
+};
 
-          {/* Close button */}
+  return (
+    
+    <div className="absolute inset-0 bg-[#f9fafb] bg-opacity-0 backdrop-blur-sm  overflow-y-auto">
+      <div className="flex justify-center py-10">
+       
+        <div className="bg-gray-400 rounded-xl shadow-2xl w-full max-w-2xl p-6 relative">
+          <h2 className="text-2xl font-bold text-gray-800 mb-4">Edit Car Details</h2>
           <button
             type="button"
             onClick={onClose}
-            className="absolute top-4 right-6 text-gray-500 hover:text-red-500 text-2xl"
+            className="absolute top-4 right-6 font-bold cursor-pointer text-gray-500 hover:text-red-500 text-2xl"
           >
             ✕
           </button>
-
-          {/* Image Preview */}
           {preview && (
             <img
               src={preview}
               alt="Preview"
-              className="w-full h-56 object-cover rounded-md mb-6 border"
+              className="w-full h-56 object-cover rounded-lg shadow-lg mb-6 border-none"
             />
           )}
 
-          {/* Form */}
           <form onSubmit={handleSubmit} className="space-y-4">
-            {/* Car Name */}
             <div>
-              <label className="block font-medium text-gray-700">Car Name</label>
+              <label className="block font-medium text-gray-600">Car Name</label>
               <input
                 type="text"
                 name="name"
                 value={formData.name}
                 onChange={handleChange}
-                className="w-full border p-2 rounded"
+                className="w-full border p-2 rounded text-gray-400 border-none shadow-xs bg-gray-100 rounded-xl "
               />
               {errors.name && <p className="text-red-500 text-sm">{errors.name}</p>}
             </div>
 
-            {/* Price */}
             <div>
               <label className="block font-medium text-gray-700">Price per Day</label>
               <input
@@ -97,12 +102,11 @@ export default function EditCarModal({ car, onClose, onSubmit }) {
                 name="price"
                 value={formData.price}
                 onChange={handleChange}
-                className="w-full border p-2 rounded"
+                className="w-full border p-2 rounded text-gray-400 border-none shadow-xs bg-gray-100 rounded-xl"
               />
               {errors.price && <p className="text-red-500 text-sm">{errors.price}</p>}
             </div>
 
-            {/* Rating */}
             <div>
               <label className="block font-medium text-gray-700">Rating</label>
               <input
@@ -111,23 +115,21 @@ export default function EditCarModal({ car, onClose, onSubmit }) {
                 name="rating"
                 value={formData.rating}
                 onChange={handleChange}
-                className="w-full border p-2 rounded"
+                className="w-full border p-2 rounded text-gray-400 border-none shadow-xs bg-gray-100 rounded-xl"
               />
             </div>
 
-            {/* Reviews Count */}
             <div>
               <label className="block font-medium text-gray-700">Reviews Count</label>
               <input
                 type="number"
                 name="reviewsCount"
-                value={formData.reviewsCount}
+                value={formData.reviews}
                 onChange={handleChange}
-                className="w-full border p-2 rounded"
+                className="w-full border p-2 rounded text-gray-400 border-none shadow-xs bg-gray-100 rounded-xl"
               />
             </div>
 
-            {/* Passengers */}
             <div>
               <label className="block font-medium text-gray-700">Passengers</label>
               <input
@@ -135,25 +137,23 @@ export default function EditCarModal({ car, onClose, onSubmit }) {
                 name="passengers"
                 value={formData.passengers}
                 onChange={handleChange}
-                className="w-full border p-2 rounded"
+                className="w-full border p-2 rounded text-gray-400 border-none shadow-xs bg-gray-100 rounded-xl"
               />
             </div>
 
-            {/* Transmission */}
             <div>
               <label className="block font-medium text-gray-700">Transmission</label>
               <select
                 name="transmission"
                 value={formData.transmission}
                 onChange={handleChange}
-                className="w-full border p-2 rounded"
+                className="w-full border p-2 rounded text-gray-400 border-none shadow-xs bg-gray-100 rounded-xl"
               >
                 <option value="Auto">Auto</option>
                 <option value="Manual">Manual</option>
               </select>
             </div>
 
-            {/* Air Conditioning */}
             <div className="flex items-center gap-2">
               <input
                 type="checkbox"
@@ -164,7 +164,6 @@ export default function EditCarModal({ car, onClose, onSubmit }) {
               <label className="text-gray-700">Air Conditioning</label>
             </div>
 
-            {/* Doors */}
             <div>
               <label className="block font-medium text-gray-700">Doors</label>
               <input
@@ -172,11 +171,10 @@ export default function EditCarModal({ car, onClose, onSubmit }) {
                 name="doors"
                 value={formData.doors}
                 onChange={handleChange}
-                className="w-full border p-2 rounded"
+                className="w-full border p-2 rounded text-gray-400 border-none shadow-xs bg-gray-100 rounded-xl"
               />
             </div>
 
-            {/* Image Upload */}
             <div>
               <label className="block font-medium text-gray-700">Upload New Image</label>
               <input
@@ -184,23 +182,22 @@ export default function EditCarModal({ car, onClose, onSubmit }) {
                 name="image"
                 accept="image/*"
                 onChange={handleChange}
-                className="w-full border p-2 rounded"
+                className="w-full border p-2 rounded text-gray-400 border-none shadow-xs bg-gray-100 rounded-xl"
               />
               {errors.image && <p className="text-red-500 text-sm">{errors.image}</p>}
             </div>
 
-            {/* Buttons */}
             <div className="flex justify-end gap-4 pt-4">
               <button
                 type="button"
                 onClick={onClose}
-                className="px-6 py-2 bg-gray-300 text-gray-800 rounded hover:bg-gray-400"
+                className="px-6 py-2 bg-gray-300 text-gray-800 rounded-xl cursor-pointer hover:bg-gray-400"
               >
                 Cancel
               </button>
               <button
                 type="submit"
-                className="px-6 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
+                className="px-6 py-2 bg-blue-500 text-white rounded-xl cursor-pointer hover:bg-blue-600"
               >
                 Save Changes
               </button>

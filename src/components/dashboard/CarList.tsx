@@ -35,6 +35,7 @@ export default function CarList() {
   };
 
   return (
+    <div className="relative">
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
       {loading && <p>Loading cars...</p>}
       {error && <p className="text-red-500">Error: {error}</p>}
@@ -53,7 +54,7 @@ export default function CarList() {
             <p>⭐ {car.rating} ({car.reviewsCount} reviews)</p>
             <p>{car.passengers} Passengers</p>
             <p>{car.transmission}</p>
-            <p>{car.airConditioning ? "Air Conditioning" : "No AC"}</p>
+            <p>{car.ac ? "Air Conditioning" : "No AC"}</p>
             <p>{car.doors} Doors</p>
             <p className="text-lg font-semibold text-blue-600">${car.price}/day</p>
           </div>
@@ -84,6 +85,7 @@ export default function CarList() {
           onSubmit={submitEdit}
         />
       )}
+    </div>
     </div>
   );
 }

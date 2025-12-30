@@ -89,7 +89,7 @@ export default function AddCarForm() {
   return (
     <form
       onSubmit={handleSubmit}
-      className="max-w-xl mx-auto bg-white shadow-md rounded p-6 space-y-4 mt-10"
+      className="max-w-xl mx-auto bg-gray-400 shadow-md rounded-lg p-6 space-y-4 mt-10"
     >
       <h2 className="text-2xl font-bold text-center">Add Car Rental Deal</h2>
 
@@ -101,7 +101,7 @@ export default function AddCarForm() {
           placeholder="e.g. Audi R8"
           value={formData.name}
           onChange={handleChange}
-          className="w-full border p-2 rounded"
+          className="w-full border p-2 rounded  text-gray-400 border-none shadow-xs bg-gray-100 rounded-xl "
         />
         {errors.name && <p className="text-red-500 text-sm">{errors.name}</p>}
       </div>
@@ -114,7 +114,7 @@ export default function AddCarForm() {
           placeholder="e.g. 4.8"
           value={formData.rating}
           onChange={handleChange}
-          className="w-full border p-2 rounded"
+          className="w-full border p-2 rounded  text-gray-400 border-none shadow-xs bg-gray-100 rounded-xl"
         />
         {errors.rating && <p className="text-red-500 text-sm">{errors.rating}</p>}
       </div>
@@ -127,7 +127,7 @@ export default function AddCarForm() {
           placeholder="e.g. 2436"
           value={formData.reviews}
           onChange={handleChange}
-          className="w-full border p-2 rounded"
+          className="w-full border p-2 rounded  text-gray-400 border-none shadow-xs bg-gray-100 rounded-xl"
         />
         {errors.reviews && <p className="text-red-500 text-sm">{errors.reviews}</p>}
       </div>
@@ -140,7 +140,7 @@ export default function AddCarForm() {
           placeholder="e.g. 4 Passengers"
           value={formData.passengers}
           onChange={handleChange}
-          className="w-full border p-2 rounded"
+          className="w-full border p-2 rounded  text-gray-400 border-none shadow-xs bg-gray-100 rounded-xl"
         />
         {errors.passengers && <p className="text-red-500 text-sm">{errors.passengers}</p>}
       </div>
@@ -151,7 +151,7 @@ export default function AddCarForm() {
           name="transmission"
           value={formData.transmission}
           onChange={handleChange}
-          className="w-full border p-2 rounded"
+          className="w-full border p-2 rounded  text-gray-400 border-none shadow-xs bg-gray-100 rounded-xl"
         >
           <option value="Auto">Auto</option>
           <option value="Manual">Manual</option>
@@ -178,7 +178,7 @@ export default function AddCarForm() {
           placeholder="e.g. 4 Doors"
           value={formData.doors}
           onChange={handleChange}
-          className="w-full border p-2 rounded"
+          className="w-full border p-2 rounded text-gray-400 border-none shadow-xs bg-gray-100 rounded-xl"
         />
         {errors.doors && <p className="text-red-500 text-sm">{errors.doors}</p>}
       </div>
@@ -191,7 +191,7 @@ export default function AddCarForm() {
           placeholder="e.g. 1800"
           value={formData.price}
           onChange={handleChange}
-          className="w-full border p-2 rounded"
+          className="w-full border p-2 rounded text-gray-400 border-none shadow-xs bg-gray-100 rounded-xl"
         />
         {errors.price && <p className="text-red-500 text-sm">{errors.price}</p>}
       </div>
@@ -203,21 +203,21 @@ export default function AddCarForm() {
           name="image"
           accept="image/*"
           onChange={handleChange}
-          className="w-full border p-2 rounded"
+          className="w-full border p-2 rounded text-gray-400 border-none shadow-xs bg-gray-100 rounded-xl"
         />
         {errors.image && <p className="text-red-500 text-sm">{errors.image}</p>}
         {preview && (
           <img
             src={preview}
             alt="Preview"
-            className="mt-4 w-full h-40 object-contain border rounded"
+            className="mt-4 w-full h-40 object-contain border rounded text-gray-400 border-none shadow-xs bg-gray-100 rounded-xl"
           />
         )}
       </div>
 
       <button
         type="submit"
-        className="w-full bg-blue-500 text-white py-2 rounded hover:bg-blue-600"
+        className="w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600 cursor-pointer"
       >
         Add Car
       </button>

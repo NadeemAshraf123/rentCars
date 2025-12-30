@@ -4,7 +4,7 @@ import {
   addCarApi,
   updateCarApi,
   deleteCarApi,
-} from "../../store/carApi/carApi";
+} from "../../api/carApi/carApi";
 
 // GET cars
 export const fetchCars = createAsyncThunk("cars/fetchCars", async (_, thunkAPI) => {

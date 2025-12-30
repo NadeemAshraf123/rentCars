@@ -18,7 +18,9 @@ import Footer from "./components/pages/home/Footer";
 import LoginForm from "./components/auth/Login";
 import SignupForm from "./components/auth/Signup";
 import AddCarForm from "./components/pages/popularrentaldeals/AddCarForm";
-import Dashboard from "./components/dashboard/Dashboard"; // ✅ new dashboard page
+import Dashboard from "./components/dashboard/Dashboard"; 
+import Booking from "./components/dashboard/BookingCars";
+import Feedback from "./components/pages/feedback/FeedBack";
 
 function OwnerRoute({ children }) {
   const { user } = useSelector((state) => state.auth);
@@ -43,7 +45,7 @@ function App() {
 
   return (
     <>
-      {/* ✅ Pass user to Header so it can conditionally show Dashboard nav */}
+  
       <Header user={user} />
 
       <Routes>
@@ -72,6 +74,9 @@ function App() {
 
         <Route path="/login" element={<LoginForm />} />
         <Route path="/signup" element={<SignupForm />} />
+        <Route path="/booking" element={<Booking />} /> 
+        <Route path="/feedback" element= { <Feedback />  } />
+
 
         <Route
           path="/addcarform"
@@ -82,12 +87,13 @@ function App() {
           }
         />
 
-        {/* ✅ Protected Dashboard route */}
+        
         <Route
           path="/dashboard"
           element={
             <OwnerRoute>
               <Dashboard />
+            
             </OwnerRoute>
           }
         />
